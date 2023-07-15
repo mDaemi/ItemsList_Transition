@@ -18,16 +18,16 @@ struct ProductDetail {
     var headline: String?
     var description: String?
     var categories: [String]?
-    var globalRating: globalRating?
-    var images: [ImageURL]?
+    var globalRating: GlobalRating?
+    var images: [ImageURL]
 }
 
 struct ImageURL {
-    var size: String?
-    var url: String?
+    var size: String
+    var url: String
 }
 
-struct globalRating {
+struct GlobalRating {
     var score: Float?
     var nbReviews: Int?
 }

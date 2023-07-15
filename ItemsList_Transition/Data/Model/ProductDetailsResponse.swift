@@ -19,7 +19,7 @@ struct ProductDetailsResponse: Decodable {
     var headline: String?
     var description: String?
     var categories: [String]?
-    var globalRating: globalRatingResponse?
+    var globalRating: GlobalRatingResponse?
     var images: [ImagesURLsResponse]?
 }
 
@@ -42,7 +42,7 @@ struct SellerResponse: Decodable {
     var login: String?
 }
 
-struct globalRatingResponse: Decodable {
+struct GlobalRatingResponse: Decodable {
     var score: Float?
     var nbReviews: Int?
 }
