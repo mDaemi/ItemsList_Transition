@@ -14,13 +14,13 @@ extension Constants {
     
     struct Service {
         struct API {
-            static let base = "raw.githubusercontent.com/leboncoin/paperclip/master"
-            static let items = "/listing.json"
-            static let categories = "/categories.json"
+            static let base = "https://4206121f-64a1-4256-a73d-2ac541b3efe4.mock.pstmn.io/products"
+            static let products = "/search?keyword="
+            static let productDetails = "/details?id="
             
             enum request {
-                case items
-                case categories
+                case products
+                case productDetails
             }
         }
         
@@ -38,10 +38,10 @@ extension Constants {
         var suffix: String = ""
         
         switch request {
-        case .items:
-            suffix = APIs.items
-        case .categories:
-            suffix = APIs.categories
+        case .products:
+            suffix = APIs.products
+        case .productDetails:
+            suffix = APIs.productDetails
         }
         
         return "https://\(APIs.base)\(suffix)"
