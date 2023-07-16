@@ -26,7 +26,6 @@ final class ProductDetailsService: AbstractService {
         if #available(iOS 15.0, *) {
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
             let decoder = self.getDecoder()
-            decoder.dateDecodingStrategy = .iso8601
             return try decoder.decode(ProductDetailsResponse.self, from: data)
         } else {
             return try await withCheckedThrowingContinuation({
@@ -50,7 +49,6 @@ final class ProductDetailsService: AbstractService {
             } else if let data = data {
                 do {
                     let decoder = self.getDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
                     completion(try decoder.decode(ProductDetailsResponse.self, from: data), nil)
                 } catch {
                     completion(nil, AppError.ServiceError.invalidData)

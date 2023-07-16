@@ -48,7 +48,6 @@ final class ProductListService: AbstractService {
             } else if let data = data {
                 do {
                     let decoder = self.getDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
                     completion(try decoder.decode(ProductsResponse.self, from: data), nil)
                 } catch {
                     completion(nil, AppError.ServiceError.invalidData)

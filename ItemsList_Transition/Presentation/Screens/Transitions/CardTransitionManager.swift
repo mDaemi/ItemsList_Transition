@@ -62,7 +62,7 @@ class CardTransitionManager: NSObject {
     }
     
     private func createCardViewCopy(cardView: CardView) -> CardView {
-        var cardModel = cardView.cardModel
+        let cardModel = cardView.cardModel
         cardModel.viewMode = transition.cardMode
         let cardViewCopy = CardView(cardModel: cardModel)
         return cardViewCopy
@@ -117,33 +117,32 @@ extension CardTransitionManager: UIViewControllerAnimatedTransitioning {
             closeButton.rightAnchor.constraint(equalTo: cardViewCopy.shadowView.rightAnchor, constant: -20.0)
         ])
         
-        // TODO:
         if transition == .presentation {
-//            let detailView = toView as! DetailView
-//            containerView.addSubview(detailView.view)
-//            detailView.viewsAreHidden = true
-//            closeButton.alpha = transition.next.closeAlpha
-//
-//            moveAndConvertToCardView(cardView: cardViewCopy, containerView: containerView, yOriginToMoveTo: 0) {
-//                detailView.viewsAreHidden = false
-//                cardViewCopy.removeFromSuperview()
-//                cardView.isHidden = false
-//                detailView.createSnapshotOfView()
-//                transitionContext.completeTransition(true)
-//            }
+            let detailView = toView as! ProductDetailsVC
+            containerView.addSubview(detailView.view)
+            detailView.viewsAreHidden = true
+            closeButton.alpha = transition.next.closeAlpha
+            
+            moveAndConvertToCardView(cardView: cardViewCopy, containerView: containerView, yOriginToMoveTo: 0) {
+                detailView.viewsAreHidden = false
+                cardViewCopy.removeFromSuperview()
+                cardView.isHidden = false
+                detailView.createSnapshotOfView()
+                transitionContext.completeTransition(true)
+            }
             
         } else {
             // Dismissal
-//            let detailView = fromView as! DetailView
-//            detailView.viewsAreHidden = true
-//            closeButton.alpha = transition.next.closeAlpha
-//
-//            cardViewCopy.frame = CGRect(x: 0, y: 0, width: (detailView.cardView?.frame.size.width)!, height: (detailView.cardView?.frame.size.height)!)
-//
-//            moveAndConvertToCardView(cardView: cardViewCopy, containerView: containerView, yOriginToMoveTo: absoluteCardViewFrame.origin.y) {
-//                cardView.isHidden = false
-//                transitionContext.completeTransition(true)
-//            }
+            let detailView = fromView as! ProductDetailsVC
+            detailView.viewsAreHidden = true
+            closeButton.alpha = transition.next.closeAlpha
+            
+            cardViewCopy.frame = CGRect(x: 0, y: 0, width: (detailView.cardView?.frame.size.width)!, height: (detailView.cardView?.frame.size.height)!)
+            
+            moveAndConvertToCardView(cardView: cardViewCopy, containerView: containerView, yOriginToMoveTo: absoluteCardViewFrame.origin.y) {
+                cardView.isHidden = false
+                transitionContext.completeTransition(true)
+            }
         }
         
     }
@@ -200,9 +199,7 @@ extension CardTransitionManager: UIViewControllerAnimatedTransitioning {
             cardView.updateLayout(for: self.transition.next.cardMode)
             expandContractAnimator.startAnimation()
         }
-        
     }
-    
 }
 
 extension CardTransitionManager: UIViewControllerTransitioningDelegate {
@@ -216,5 +213,5 @@ extension CardTransitionManager: UIViewControllerTransitioningDelegate {
         transition = .dismissal
         return self
     }
+    
 }
-
