@@ -8,6 +8,7 @@ import UIKit
 
 class CardView: UIView {
     
+    // MARK: Properties
     lazy var shadowView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -137,15 +138,20 @@ class CardView: UIView {
         
         addConstraints([leftConstraint, rightConstraint, topConstraint, bottomConstraint])
         
-        addBackgroundImage()
+        addProductImage()
         addFeaturedTitle()
     }
     
     // MARK: - Background Image -
-    private func addBackgroundImage() {
-        configureBackgroundImage()
+    private func addProductImage() {
+        let screenHeight = UIScreen.main.bounds.size.height
+        let screenWidth = UIScreen.main.bounds.size.width
+        
+        productImageView.image = UIImage(named: "SplashImage")
 
         containerView.addSubview(productImageView)
+        
+//        productImageView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 8)
         
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
@@ -154,18 +160,12 @@ class CardView: UIView {
             productImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor)
         ])
 
-        let topPadding = 8
-        var top: CGFloat = 25.0
-        
-        if cardModel.viewMode == .full {
-            top = max(top, CGFloat(topPadding + 5))
-        }
-    }
-    
-    private func configureBackgroundImage() {
-        // TODO: 
-//        guard let backgroundImage = cardModel.backgroundImage else { return }
-        productImageView.image = UIImage(named: "SplashImage")
+//        let topPadding = 8
+//        var top: CGFloat = 25.0
+//
+//        if cardModel.viewMode == .full {
+//            top = max(top, CGFloat(topPadding + 5))
+//        }
     }
     
     // MARK: - Featured Title -
@@ -201,7 +201,7 @@ class CardView: UIView {
         
         // TODO:
 //        hide(views: [self.titleLabel, self.subtitleLabel, self.descriptionLabel, self.tableView])
-        addBackgroundImage()
+        addProductImage()
 //        addFeaturedTitle()
     }
     

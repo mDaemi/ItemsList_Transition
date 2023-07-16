@@ -11,9 +11,11 @@ import Combine
 class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
     
     // MARK: Properties
+    var viewModel: ProductListViewModel?
     private var observers: [AnyCancellable] = []
     private let transitionManger = CardTransitionManager()
-    var viewModel: ProductListViewModel?
+    private var heightConstraint: NSLayoutConstraint!
+    private let cardHeight: Int = 200
     
     // MARK: Views
     lazy var scrollView: UIScrollView = {
@@ -105,14 +107,15 @@ extension ProductsListVC {
         ])
     }
     
+
     func configureCardsView() {
-        guard let viewModel = viewModel else { return }
         scrollView.addSubview(cardsTableView)
+        heightConstraint = cardsTableView.heightAnchor.constraint(equalToConstant: 0)
         NSLayoutConstraint.activate([
             cardsTableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             cardsTableView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
             cardsTableView.widthAnchor.constraint(equalToConstant: view.frame.size.width),
-            cardsTableView.heightAnchor.constraint(equalToConstant: CGFloat(450 * 20)),
+            heightConstraint,
             cardsTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
@@ -125,9 +128,12 @@ extension ProductsListVC {
         viewModel?.$products
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
-                self?.cardsTableView.isHidden = false
-                self?.cardsTableView.reloadData()
-                self?.view.hideLoader()
+                guard let self = self, let viewModel = self.viewModel else { return }
+                self.cardsTableView.isHidden = false
+                self.heightConstraint.constant = CGFloat(viewModel.products.count * self.cardHeight)
+                self.cardsTableView.reloadData()
+                self.view.layoutIfNeeded()
+                self.view.hideLoader()
             }
             .store(in: &observers)
     }
@@ -171,7 +177,6 @@ extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
         cardCell.clipsToBounds = false
         cardCell.contentView.clipsToBounds = false
         cardCell.cellView?.clipsToBounds = false
-        
         cardCell.layer.masksToBounds = false
         cardCell.contentView.layer.masksToBounds = false
         cardCell.cellView?.layer.masksToBounds = false
@@ -180,7 +185,7 @@ extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 450
+        return CGFloat(cardHeight)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
