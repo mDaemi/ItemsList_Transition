@@ -22,7 +22,7 @@ class CardView: UIView {
         return view
     }()
     
-    lazy var backgroundImageView: UIImageView = {
+    lazy var productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -137,21 +137,21 @@ class CardView: UIView {
         
         addConstraints([leftConstraint, rightConstraint, topConstraint, bottomConstraint])
         
-        addBackgroundImage(withApp: true)
+        addBackgroundImage()
         addFeaturedTitle()
     }
     
     // MARK: - Background Image -
-    private func addBackgroundImage(withApp hasApp: Bool) {
+    private func addBackgroundImage() {
         configureBackgroundImage()
 
-        containerView.addSubview(backgroundImageView)
+        containerView.addSubview(productImageView)
         
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            backgroundImageView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            backgroundImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor)
+            productImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            productImageView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
+            productImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            productImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor)
         ])
 
         let topPadding = 8
@@ -165,7 +165,7 @@ class CardView: UIView {
     private func configureBackgroundImage() {
         // TODO: 
 //        guard let backgroundImage = cardModel.backgroundImage else { return }
-//        backgroundImageView.image = backgroundImage
+        productImageView.image = UIImage(named: "SplashImage")
     }
     
     // MARK: - Featured Title -
@@ -201,8 +201,8 @@ class CardView: UIView {
         
         // TODO:
 //        hide(views: [self.titleLabel, self.subtitleLabel, self.descriptionLabel, self.tableView])
-        addBackgroundImage(withApp: true)
-        addFeaturedTitle()
+        addBackgroundImage()
+//        addFeaturedTitle()
     }
     
     func hide(views: [UIView]) {

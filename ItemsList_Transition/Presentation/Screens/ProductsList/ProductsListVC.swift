@@ -9,7 +9,11 @@ import UIKit
 import Combine
 
 class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
+    
+    // MARK: Properties
     private var observers: [AnyCancellable] = []
+    private let transitionManger = CardTransitionManager()
+    var viewModel: ProductListViewModel?
     
     // MARK: Views
     lazy var scrollView: UIScrollView = {
@@ -24,15 +28,15 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
         return view
     }()
     
-    // MARK: - Top View -
     lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
+//        let searchView = UISearchBar()
+//        searchView.constraintToSuperview(top: 4, bottom: 4, left: 4, right: 4)
         return view
     }()
     
-    // MARK: - Cards Table View
     lazy var cardsTableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,16 +47,14 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
         return tableView
     }()
     
-    let transitionManger = CardTransitionManager()
-    var viewModel: ProductListViewModel?
-    
+    // MARK: override functions
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
     override func viewDidLoad() {
         configureView()
-        // Data
+        
         bindViewModel()
         loadData()
     }
@@ -74,6 +76,7 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
     }
 }
 
+// MARK: Views configuration
 extension ProductsListVC {
     
     func configureView() {
@@ -109,13 +112,13 @@ extension ProductsListVC {
             cardsTableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             cardsTableView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
             cardsTableView.widthAnchor.constraint(equalToConstant: view.frame.size.width),
-            cardsTableView.heightAnchor.constraint(equalToConstant: CGFloat(450 * viewModel.products.count)),
+            cardsTableView.heightAnchor.constraint(equalToConstant: CGFloat(450 * 20)),
             cardsTableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
-    
 }
 
+// MARK: Data
 extension ProductsListVC {
     // MARK: - Private
     private func bindViewModel() {
@@ -144,6 +147,7 @@ extension ProductsListVC {
     }
 }
 
+// MARK: Table view
 extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
