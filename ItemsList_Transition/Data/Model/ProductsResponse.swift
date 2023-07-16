@@ -20,7 +20,7 @@ struct ProductsResponse: Decodable {
 struct ProductResponse: Decodable {
     var id: Int?
     var newBestPrice: Float?
-    var usedBestPrice: Int?
+    var usedBestPrice: Float?
     var headline: String?
     var reviewsAverageNote: Float?
     var nbReviews: Int?

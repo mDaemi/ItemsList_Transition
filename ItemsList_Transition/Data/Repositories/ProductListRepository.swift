@@ -13,7 +13,7 @@ class ProductListRepository: PProductListRepository {
     private let dataSource: ProductListDataSource = ProductListDataSource()
     
     // MARK: - public
-    func getProducts() async throws -> [Product]? {
-        return try await dataSource.getProducts()
+    func getProducts(for keyword: String) async throws -> [Product]? {
+        return try await dataSource.getProducts(for: keyword)
     }
 }

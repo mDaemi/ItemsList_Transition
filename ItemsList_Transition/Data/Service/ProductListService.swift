@@ -13,8 +13,8 @@ final class ProductListService: AbstractService {
     static let shared = ProductListService()
 
     // MARK: - public
-    public func getProducts() async throws -> ProductsResponse? {
-        let urlString = Constants.getUrlString(of: Constants.requests.products)
+    public func getProducts(for keyword: String) async throws -> ProductsResponse? {
+        let urlString = Constants.getUrlString(of: Constants.requests.products) + keyword
         guard let url = URL(string: urlString) else {
             throw AppError.ServiceError.invalidData
         }
@@ -24,8 +24,8 @@ final class ProductListService: AbstractService {
         if #available(iOS 15.0, *) {
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
             let decoder = self.getDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            return try decoder.decode(ProductsResponse.self, from: data)
+            let result = try decoder.decode(ProductsResponse.self, from: data)
+            return result
         } else {
             return try await withCheckedThrowingContinuation({
                 (continuation: CheckedContinuation<ProductsResponse?, Error>) in

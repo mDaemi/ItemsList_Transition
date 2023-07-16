@@ -14,5 +14,12 @@ struct ProductUIModel {
     var headline: String
     var reviewsAverageNote: Float
     var nbReviews: String
-    var imagesUrls: [String]
+    var imageUrl: String?
+    var viewMode: CardViewMode = .card
+    var backgroundType: BackgroundType = .light
+}
+
+enum CardViewMode {
+    case full
+    case card
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PProductsListUseCase {
-    func loadProducts() async throws -> [Product]?
+    func loadProducts(for keyword: String) async throws -> [Product]?
 }
 
 class ProductsListUseCase: PProductsListUseCase {
@@ -21,8 +21,8 @@ class ProductsListUseCase: PProductsListUseCase {
     }
     
     // MARK: - Internals
-    func loadProducts() async throws -> [Product]? {
-        return try await self.repository.getProducts()
+    func loadProducts(for keyword: String) async throws -> [Product]? {
+        return try await self.repository.getProducts(for: keyword)
     }
 }
 

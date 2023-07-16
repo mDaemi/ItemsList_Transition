@@ -15,6 +15,6 @@ extension Product {
                               headline: self.headline ?? "",
                               reviewsAverageNote: self.reviewsAverageNote ?? -1,
                               nbReviews: (self.nbReviews != nil) ? String(self.nbReviews!) : "-",
-                              imagesUrls: self.imagesUrls ?? [])
+                              imageUrl: self.imagesUrls?.first)
     }
 }

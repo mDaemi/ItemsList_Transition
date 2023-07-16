@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PProductListRepository {
-    func getProducts() async throws -> [Product]?
+    func getProducts(for keyword: String) async throws -> [Product]?
 }

@@ -12,8 +12,8 @@ class ProductListDataSource {
     private let service = ProductListService()
 
     // MARK: - Public
-    public func getProducts() async throws -> [Product]? {
-        guard let response = try await service.getProducts()?.products else {
+    public func getProducts(for keyword: String) async throws -> [Product]? {
+        guard let response = try await service.getProducts(for: keyword)?.products else {
             return []
         }
         

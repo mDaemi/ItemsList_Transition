@@ -14,7 +14,7 @@ extension Constants {
     
     struct Service {
         struct API {
-            static let base = "https://4206121f-64a1-4256-a73d-2ac541b3efe4.mock.pstmn.io/products"
+            static let base = "4206121f-64a1-4256-a73d-2ac541b3efe4.mock.pstmn.io/products"
             static let products = "/search?keyword="
             static let productDetails = "/details?id="
             

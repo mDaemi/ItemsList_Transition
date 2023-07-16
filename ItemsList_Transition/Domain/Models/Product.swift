@@ -10,7 +10,7 @@ import Foundation
 struct Product {
     var id: Int
     var newBestPrice: Float?
-    var usedBestPrice: Int?
+    var usedBestPrice: Float?
     var headline: String?
     var reviewsAverageNote: Float?
     var nbReviews: Int?
