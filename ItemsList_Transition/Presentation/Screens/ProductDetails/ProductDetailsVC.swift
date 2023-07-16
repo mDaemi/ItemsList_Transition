@@ -9,10 +9,11 @@ import UIKit
 
 class ProductDetailsVC: UIViewController, UIScrollViewDelegate {
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
+    // MARK: Properties
+    private let cardHeight: Int = 250
+    private var cardViewModel: ProductUIModel
+    private(set) var cardView: CardView?
+   
     // MARK: Views
     lazy var snapshotView: UIImageView = {
         let imageView = UIImageView()
@@ -60,9 +61,7 @@ class ProductDetailsVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private var cardViewModel: ProductUIModel
-    private(set) var cardView: CardView?
-    
+    // MARK: Inits
     init(cardViewModel: ProductUIModel) {
         self.cardViewModel = cardViewModel
         super.init(nibName: nil, bundle: nil)
@@ -70,6 +69,11 @@ class ProductDetailsVC: UIViewController, UIScrollViewDelegate {
     
     required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Override functions
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func viewDidLoad() {
@@ -90,14 +94,15 @@ class ProductDetailsVC: UIViewController, UIScrollViewDelegate {
     
 }
 
+// MARK: View configuration
 extension ProductDetailsVC {
     
-    func configureView() {
+    private func configureView() {
         configureScrollView()
         configureCardView()
     }
     
-    func configureScrollView() {
+    private func configureScrollView() {
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -107,7 +112,7 @@ extension ProductDetailsVC {
         ])
     }
     
-    func configureCardView() {
+    private func configureCardView() {
         let cardModel = cardViewModel
         cardViewModel.viewMode = .full
         cardView = CardView(cardModel: cardModel)
@@ -119,7 +124,7 @@ extension ProductDetailsVC {
         NSLayoutConstraint.activate([
             cardView!.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -topPadding),
             cardView!.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            cardView!.heightAnchor.constraint(equalToConstant: 450),
+            cardView!.heightAnchor.constraint(equalToConstant: CGFloat(cardHeight)),
             cardView!.widthAnchor.constraint(equalToConstant: view.frame.size.width)
         ])
         
@@ -193,6 +198,7 @@ extension ProductDetailsVC {
     
 }
 
+// MARK: ScrollView
 extension ProductDetailsVC {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -238,51 +244,10 @@ extension ProductDetailsVC {
         
         let topPadding = UIWindow.topPadding
         
-        if yContentOffset < 450 - topPadding && cardView?.cardModel.backgroundType == .dark {
+        if yContentOffset < CGFloat(cardHeight) - topPadding && cardView?.cardModel.backgroundType == .dark {
             closeButton.setImage(UIImage(named: "lightOnDark"), for: .normal)
         } else {
             closeButton.setImage(UIImage(named: "darkOnLight"), for: .normal)
         }
-        
     }
-
-}
-
-extension UIWindow {
-  
-    private class var key: UIWindow {
-        
-        if #available(iOS 13.0, *) {
-            guard let keyWindow = UIApplication.shared.connectedScenes
-                    .filter({$0.activationState == .foregroundActive || $0.activationState == .foregroundInactive})
-                    .map({$0 as? UIWindowScene})
-                    .compactMap({$0})
-                    .first?.windows
-                    .filter({$0.isKeyWindow}).first else {
-                fatalError("Fatal Error: now window is set to keyWindow")
-            }
-            
-            return keyWindow
-        } else {
-            guard let keyWindow = UIApplication.shared.keyWindow else {
-                fatalError("Fatal Error: now window is set to keyWindow")
-            }
-            return keyWindow
-        }
-        
-    }
-  
-    private class var keySafeAreaInsets: UIEdgeInsets {
-        guard #available(iOS 11.0, *) else { return .zero }
-        return UIWindow.key.safeAreaInsets
-    }
-    
-    class var topPadding: CGFloat {
-        return UIWindow.keySafeAreaInsets.top
-    }
-    
-    class var bottomPadding: CGFloat {
-        return UIWindow.keySafeAreaInsets.bottom
-    }
-    
 }
