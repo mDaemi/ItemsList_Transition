@@ -17,7 +17,7 @@ class ProductListDataSource {
             return []
         }
         
-        let result = response.map {$0.toDomain()}
+        let result = response.compactMap {$0.toDomain()}
         return result
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct ProductDetail {
-    var productId: Int?
+    var productId: Int
     var salePrice: Float?
     var newBestPrice: Float?
     var usedBestPrice: Int?
