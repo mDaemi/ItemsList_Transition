@@ -8,6 +8,17 @@ import UIKit
 
 class CardView: UIView {
     
+    // MARK: - Properties -
+    var cardModel: ProductUIModel
+    private var leftConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var rightConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var topConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var bottomConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var headlineTopConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var imageTopConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var appViewTop: NSLayoutConstraint = NSLayoutConstraint()
+    
+    // MARK: - Views -
     lazy var shadowView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -22,43 +33,41 @@ class CardView: UIView {
         return view
     }()
     
-    lazy var backgroundImageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    lazy var titleLabel: UILabel = {
+    lazy var headlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = cardModel.backgroundType.titleTextColor
         return label
     }()
     
-    var subtitleTop: NSLayoutConstraint = NSLayoutConstraint()
-    lazy var subtitleLabel: UILabel = {
+    lazy var starView: StarView = {
+        let view = StarView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var newPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = cardModel.backgroundType.subtitleTextColor
         return label
     }()
     
-    lazy var descriptionLabel: UILabel = {
+    lazy var usedPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = cardModel.backgroundType.subtitleTextColor
         return label
     }()
     
-    var leftConstraint: NSLayoutConstraint = NSLayoutConstraint()
-    var rightConstraint: NSLayoutConstraint = NSLayoutConstraint()
-    var topConstraint: NSLayoutConstraint = NSLayoutConstraint()
-    var bottomConstraint: NSLayoutConstraint = NSLayoutConstraint()
-    
-    var appViewTop: NSLayoutConstraint = NSLayoutConstraint()
-    var cardModel: ProductUIModel
-    
+    // MARK: - init -
     init(cardModel: ProductUIModel) {
         self.cardModel = cardModel
         
@@ -77,7 +86,7 @@ class CardView: UIView {
     }
     
     // MARK: - Shadow -
-    func addShadow() {
+    private func addShadow() {
         shadowView.layer.cornerRadius = 20
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOpacity = 0.2
@@ -85,13 +94,14 @@ class CardView: UIView {
         shadowView.layer.shadowOffset = CGSize(width: -1, height: 2)
     }
     
-    func removeShadow() {
+    private func removeShadow() {
         shadowView.layer.shadowColor = UIColor.clear.cgColor
         shadowView.layer.shadowOpacity = 0
         shadowView.layer.shadowRadius = 0
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
+    // MARK: - handle full and card mode -
     func updateLayout(for viewMode: CardViewMode) {
         switch viewMode {
         case .card:
@@ -100,7 +110,8 @@ class CardView: UIView {
             topConstraint.constant = 15
             bottomConstraint.constant = -15
             
-            subtitleTop.constant = 20
+            headlineTopConstraint.constant = 20
+            imageTopConstraint.constant = 20
             appViewTop.constant = 25
             
             addShadow()
@@ -113,21 +124,22 @@ class CardView: UIView {
             topConstraint.constant = 0
             bottomConstraint.constant = 0
             
-            subtitleTop.constant = max(20, topPadding)
+            headlineTopConstraint.constant = max(20, topPadding)
+            imageTopConstraint.constant = max(20, topPadding)
             appViewTop.constant = max(25, topPadding + 5)
            
             removeShadow()
         }
     }
     
-    func convertContainerViewToCardView() {
+    private func convertContainerViewToCardView() {
         updateLayout(for: .card)
 
         containerView.layer.cornerRadius = 20
         containerView.layer.masksToBounds = true
     }
     
-    func convertContainerViewToFullScreen() {
+    private func convertContainerViewToFullScreen() {
         updateLayout(for: .full)
 
         containerView.layer.cornerRadius = 0
@@ -135,7 +147,7 @@ class CardView: UIView {
     }
     
     // MARK: - Configure View -
-    func configureViews() {
+    private func configureViews() {
         backgroundColor = .clear
         addSubview(shadowView)
         addSubview(containerView)
@@ -155,92 +167,85 @@ class CardView: UIView {
         
         addConstraints([leftConstraint, rightConstraint, topConstraint, bottomConstraint])
         
-        addBackgroundImage()
-        addTopTitleLabels()
-        addDescriptionLabel()
+        addProductImage()
+        addHeadlineLabel()
+        addStarView()
+        addPricesLabel()
     }
     
-    // MARK: - Description Label -
-    private func addDescriptionLabel() {
-        configureDescriptionLabel()
-        containerView.addSubview(descriptionLabel)
-
-        NSLayoutConstraint.activate([
-            descriptionLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20.0),
-            descriptionLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -40.0),
-            descriptionLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15.0)
-        ])
+    func configure(with viewModel: ProductUIModel) {
+        self.cardModel = viewModel
+        addProductImage()
+        addHeadlineLabel()
+        addStarView()
+        addPricesLabel()
+    }
+    
+    // MARK: - product image -
+    private func addProductImage() {
+        configureProductImage()
+        containerView.addSubview(imageView)
         
-    }
-    
-    private func configureDescriptionLabel() {
-        descriptionLabel.configureAppSubHeaderLabel(withText: "Salam")
-    }
-    
-    // MARK: - Background Image -
-    private func addBackgroundImage() {
-        configureBackgroundImage()
-
-        containerView.addSubview(backgroundImageView)
+        imageTopConstraint = imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: topPadding())
         
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            backgroundImageView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            backgroundImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor)
+            imageTopConstraint,
+            imageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16.0),
+            imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20.0),
+            imageView.widthAnchor.constraint(equalToConstant: CGFloat(constraint.cardHeight) * 0.5)
         ])
     }
     
-    private func configureBackgroundImage() {
-        backgroundImageView.image = UIImage(named: "SplashImage")
+    private func configureProductImage() {
+        imageView.loadImage(urlString: cardModel.imageUrl, placeholderImage: UIImage(named: "place_holder"), errorImage: UIImage(named: "place_holder"))
     }
     
-    // MARK: - Top Title Labels -
-    private func addTopTitleLabels() {
-        configureTopTitleLabels()
-
-        containerView.addSubview(subtitleLabel)
-        containerView.addSubview(titleLabel)
+    // MARK: - headLine Label -
+    private func addHeadlineLabel() {
+        configureheadlineLabel()
+        containerView.addSubview(headlineLabel)
         
+        headlineTopConstraint = headlineLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: topPadding())
+        
+        NSLayoutConstraint.activate([
+            headlineTopConstraint,
+            headlineLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 12.0),
+            headlineLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -25.0)
+        ])
+    }
+    
+    private func configureheadlineLabel() {
+        headlineLabel.configureHeaderLabel(withText: cardModel.headline)
+    }
+    
+    // MARK: - star view -
+    private func addStarView() {
+        containerView.addSubview(starView)
+        starView.anchor(top: headlineLabel.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
+    }
+    
+    // MARK: - prices Label -
+    private func addPricesLabel() {
+        configureusedPriceLabel()
+        containerView.addSubview(newPriceLabel)
+        containerView.addSubview(usedPriceLabel)
+
+        newPriceLabel.anchor(top: starView.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
+        
+        usedPriceLabel.anchor(top: newPriceLabel.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
+    }
+    
+    private func configureusedPriceLabel() {
+        newPriceLabel.configureAppSubHeaderLabel(withText: "Neuf dès \(cardModel.newBestPrice) €")
+        usedPriceLabel.configureAppSubHeaderLabel(withText: "Occasion dès \(cardModel.usedBestPrice) €")
+    }
+    
+    private func topPadding() -> CGFloat {
         let topPadding = UIWindow.topPadding
         var top: CGFloat = 20.0
         if cardModel.viewMode == .full {
             top = max(top, topPadding)
         }
-        
-        subtitleTop = subtitleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: top)
-        
-        NSLayoutConstraint.activate([
-            subtitleTop,
-            subtitleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20.0),
-            subtitleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20.0),
-        
-            titleLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 5.0),
-            titleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 20.0),
-            titleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -20.0),
-            
-        ])
-        
-    }
-    
-    private func configureTopTitleLabels() {
-        subtitleLabel.configureSubHeaderLabel(withText: "BY")
-        titleLabel.configureHeaderLabel(withText: "HI")
-    }
-    
-    func configure(with viewModel: ProductUIModel) {
-    
-        self.cardModel = viewModel
-        addBackgroundImage()
-        addTopTitleLabels()
-        addDescriptionLabel()
-    }
-    
-    func hide(views: [UIView]) {
-        views.forEach{ $0.removeFromSuperview() }
-    }
-    
-    func show(views: [UIView]) {
-        views.forEach{ $0.isHidden = false }
+        return top
     }
 }

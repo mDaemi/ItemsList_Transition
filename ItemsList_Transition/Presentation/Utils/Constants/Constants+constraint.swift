@@ -15,6 +15,7 @@ extension Constants {
         static let betweenlblPadding: CGFloat = CGFloat(4)
         static let paddingNormal: CGFloat = CGFloat(10)
         static let paddingBig: CGFloat = CGFloat(20)
+        static let cardHeight: Int = 250
     }
 }
 

@@ -8,9 +8,18 @@
 import UIKit
 
 extension UIImageView {
-    func loadImage(urlString: String,
+    func loadImage(urlString: String?,
                    placeholderImage: UIImage?,
                    errorImage: UIImage?) {
+        
+        guard let urlString = urlString else {
+            if let placeholder = placeholderImage {
+                DispatchQueue.main.async {
+                    self.image = placeholder
+                }
+            }
+            return
+        }
         
         if let cachedImage = imageCache.object(forKey: urlString as NSString) {
             image = cachedImage

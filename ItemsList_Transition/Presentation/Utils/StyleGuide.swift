@@ -38,16 +38,15 @@ extension UIColor {
     static let lightSubtitleTextColor: UIColor = UIColor.white.withAlphaComponent(0.8)
     static let lightTitleTextColor: UIColor = .white
     static let darkSubtitleTextColor: UIColor = .gray
-    static let darkTitleTextColor: UIColor = .black
+    static let darkTitleTextColor: UIColor = UIColor(red: 0.25, green: 0.25, blue: 0.25, alpha: 1)
 }
 
 extension CGFloat {
     static let heroTextSize: CGFloat = 50.0
-    static let headerTextSize: CGFloat = 28.0
+    static let headerTextSize: CGFloat = 16.0
     static let subHeaderTextSize: CGFloat = 15.0
     static let appHeaderTextSize: CGFloat = 15.0
     static let appSubHeaderTextSize: CGFloat = 13.0
-    static let tinyTextSize: CGFloat = 8.0
 }
 
 extension UILabel {
@@ -72,10 +71,6 @@ extension UILabel {
         configure(withText: text, size: .appSubHeaderTextSize, alignment: .left, lines: 2, weight: .regular)
     }
 
-    func configureTinyLabel(withText text: String) {
-        configure(withText: text, size: .tinyTextSize, alignment: .center, lines: 1, weight: .regular)
-    }
-
     private func configure(withText newText: String,
                          size: CGFloat,
                          alignment: NSTextAlignment,
@@ -87,7 +82,6 @@ extension UILabel {
         numberOfLines = lines
         lineBreakMode = .byTruncatingTail
     }
-    
 }
 
 extension UIImageView {

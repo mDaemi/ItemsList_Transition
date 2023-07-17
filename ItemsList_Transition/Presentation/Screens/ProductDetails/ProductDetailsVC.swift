@@ -10,7 +10,6 @@ import UIKit
 class ProductDetailsVC: UIViewController, UIScrollViewDelegate {
     
     // MARK: Properties
-    private let cardHeight: Int = 250
     private var cardViewModel: ProductUIModel
     private(set) var cardView: CardView?
    
@@ -124,7 +123,7 @@ extension ProductDetailsVC {
         NSLayoutConstraint.activate([
             cardView!.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -topPadding),
             cardView!.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            cardView!.heightAnchor.constraint(equalToConstant: CGFloat(cardHeight)),
+            cardView!.heightAnchor.constraint(equalToConstant: CGFloat(constraint.cardHeight)),
             cardView!.widthAnchor.constraint(equalToConstant: view.frame.size.width)
         ])
         
@@ -175,7 +174,7 @@ extension ProductDetailsVC {
         NSLayoutConstraint.activate([
             textLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             textLabel.widthAnchor.constraint(equalToConstant: view.frame.size.width - 40),
-            textLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: 20.0),
+            textLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: -20.0),
             textLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20.0)
         ])
         
@@ -233,7 +232,6 @@ extension ProductDetailsVC {
             viewsAreHidden = false
             snapshotView.isHidden = true
         }
-        
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -244,7 +242,7 @@ extension ProductDetailsVC {
         
         let topPadding = UIWindow.topPadding
         
-        if yContentOffset < CGFloat(cardHeight) - topPadding && cardView?.cardModel.backgroundType == .dark {
+        if yContentOffset < CGFloat(constraint.cardHeight) - topPadding && cardView?.cardModel.backgroundType == .dark {
             closeButton.setImage(UIImage(named: "lightOnDark"), for: .normal)
         } else {
             closeButton.setImage(UIImage(named: "darkOnLight"), for: .normal)

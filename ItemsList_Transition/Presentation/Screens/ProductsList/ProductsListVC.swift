@@ -15,7 +15,6 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
     private var observers: [AnyCancellable] = []
     private let transitionManger = CardTransitionManager()
     private var heightConstraint: NSLayoutConstraint!
-    private let cardHeight: Int = 250
     private var keyboardIsOpen: Bool = false
     
     // MARK: Views
@@ -168,7 +167,7 @@ extension ProductsListVC {
             .sink { [weak self] items in
                 guard let self = self, let viewModel = self.viewModel else { return }
                 self.cardsTableView.isHidden = false
-                self.heightConstraint.constant = CGFloat(viewModel.products.count * self.cardHeight)
+                self.heightConstraint.constant = CGFloat(viewModel.products.count * constraint.cardHeight)
                 self.cardsTableView.reloadData()
                 self.view.layoutIfNeeded()
                 self.view.hideLoader()
@@ -224,7 +223,7 @@ extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(cardHeight)
+        return CGFloat(constraint.cardHeight)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
