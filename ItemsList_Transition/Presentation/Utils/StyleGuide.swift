@@ -46,7 +46,7 @@ extension CGFloat {
     static let headerTextSize: CGFloat = 16.0
     static let subHeaderTextSize: CGFloat = 15.0
     static let appHeaderTextSize: CGFloat = 15.0
-    static let appSubHeaderTextSize: CGFloat = 13.0
+    static let smallTextSize: CGFloat = 12.0
 }
 
 extension UILabel {
@@ -68,7 +68,7 @@ extension UILabel {
     }
 
     func configureAppSubHeaderLabel(withText text: String) {
-        configure(withText: text, size: .appSubHeaderTextSize, alignment: .left, lines: 2, weight: .regular)
+        configure(withText: text, size: .smallTextSize, alignment: .left, lines: 2, weight: .regular)
     }
 
     private func configure(withText newText: String,
@@ -95,20 +95,8 @@ extension UIImageView {
     }
 }
 
-extension UIButton {
-    func roundedActionButton(withText text: String) {
-        let bgColor: UIColor = .buttonBackgroundColor
-        backgroundColor = bgColor
-        setTitle("", for: UIControl.State.normal)
-        setImage(UIImage(named: text), for: .normal)
-        titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
-        layer.cornerRadius = 15
-        contentEdgeInsets = UIEdgeInsets(top: 5.5, left: 0, bottom:5.5, right: 0)
-    }
-}
-
 extension UIStackView {
-    func configure(withAxis axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment, spacing: CGFloat, distribution: UIStackView.Distribution = .fill) {
+    func configure(withAxis axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment, spacing: CGFloat, distribution: UIStackView.Distribution = .fillEqually) {
         self.axis = axis
         self.alignment = alignment
         self.spacing = spacing

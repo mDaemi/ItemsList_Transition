@@ -53,6 +53,13 @@ class CardView: UIView {
         return view
     }()
     
+    lazy var nbReviewLable: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = cardModel.backgroundType.subtitleTextColor
+        return label
+    }()
+    
     lazy var newPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -220,8 +227,22 @@ class CardView: UIView {
     
     // MARK: - star view -
     private func addStarView() {
+        configureusedStarView()
         containerView.addSubview(starView)
-        starView.anchor(top: headlineLabel.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
+        containerView.addSubview(nbReviewLable)
+        
+        starView.anchor(top: headlineLabel.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 110, height: 20)
+        
+        NSLayoutConstraint.activate([
+            nbReviewLable.leftAnchor.constraint(equalTo: starView.rightAnchor, constant: 5.0),
+            nbReviewLable.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8.0),
+            nbReviewLable.centerYAnchor.constraint(equalTo: starView.centerYAnchor)
+        ])
+    }
+    
+    private func configureusedStarView() {
+        starView.configure(starRating: cardModel.reviewsAverageNote)
+        nbReviewLable.configureAppSubHeaderLabel(withText: "\(cardModel.nbReviews) Avis")
     }
     
     // MARK: - prices Label -
@@ -232,12 +253,12 @@ class CardView: UIView {
 
         newPriceLabel.anchor(top: starView.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 16, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
         
-        usedPriceLabel.anchor(top: newPriceLabel.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
+        usedPriceLabel.anchor(top: newPriceLabel.bottomAnchor, left: imageView.rightAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 10, paddingLeft: 12, paddingBottom: 0, paddingRight: -20)
     }
     
     private func configureusedPriceLabel() {
-        newPriceLabel.configureAppSubHeaderLabel(withText: "Neuf dès \(cardModel.newBestPrice) €")
-        usedPriceLabel.configureAppSubHeaderLabel(withText: "Occasion dès \(cardModel.usedBestPrice) €")
+        newPriceLabel.configureAppHeaderLabel(withText: "Neuf dès \(cardModel.newBestPrice)")
+        usedPriceLabel.configureAppHeaderLabel(withText: "Occasion dès \(cardModel.usedBestPrice)")
     }
     
     private func topPadding() -> CGFloat {

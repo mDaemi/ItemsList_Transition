@@ -9,37 +9,37 @@ import UIKit
 
 class StarView: UIView {
     
+    var starRating: CGFloat = 0
+    
     lazy var starRatingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 4
+        stackView.configure(withAxis: .horizontal, alignment: .fill, spacing: 4)
         return stackView
     }()
     
     lazy var starFilledImage: UIImage = {
-        // Replace with your star-filled image
         return UIImage(named: "star-filled")!
     }()
     
     lazy var starEmptyImage: UIImage = {
-        // Replace with your star-empty image
         return UIImage(named: "star-empty")!
     }()
-    
-    lazy var starRating: CGFloat = 4.5
     
     init() {
         super.init(frame: .zero)
         backgroundColor = .white
-        setupStarRatingView()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(starRating: Float) {
+        self.starRating = CGFloat(starRating)
+        setupStarRatingView()
+    }
+    
     private func setupStarRatingView() {
-        // Determine the number of filled and empty stars
         let filledStars = Int(starRating)
         let hasHalfStar = starRating.truncatingRemainder(dividingBy: 1) != 0
         let emptyStars = hasHalfStar ? 5 - filledStars - 1 : 5 - filledStars
@@ -52,10 +52,7 @@ class StarView: UIView {
         
         // Add the half star if necessary
         if hasHalfStar {
-            let halfStarImageView = UIImageView(image: starFilledImage)
-            halfStarImageView.contentMode = .left
-            halfStarImageView.clipsToBounds = true
-            halfStarImageView.frame.size.width = starFilledImage.size.width / 2
+            let halfStarImageView = UIImageView(image: UIImage(named: "half-star")!)
             starRatingStackView.addArrangedSubview(halfStarImageView)
         }
         
@@ -71,7 +68,9 @@ class StarView: UIView {
         // Set constraints for the stack view
         NSLayoutConstraint.activate([
             starRatingStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            starRatingStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            starRatingStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            starRatingStackView.widthAnchor.constraint(equalTo: widthAnchor),
+            starRatingStackView.heightAnchor.constraint(equalTo: heightAnchor),
         ])
     }
 }
