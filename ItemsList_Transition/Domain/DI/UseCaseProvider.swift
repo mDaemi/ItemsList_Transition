@@ -9,4 +9,5 @@ import UIKit
 
 protocol UseCaseProvider {
     func provideProductsListUseCase() -> PProductsListUseCase
+    func provideProductDetailsUseCase() -> PProductDetailsUseCase
 }

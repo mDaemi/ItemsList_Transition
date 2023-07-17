@@ -16,10 +16,6 @@ final class SnackView: UIView {
     // MARK: - Properties
     private let label : UILabel = {
         let lbl = UILabel()
-        lbl.textColor = .black
-        lbl.textAlignment = .left
-        lbl.numberOfLines = 0
-        lbl.font = FontConstant.boldMedium.getFont()
         lbl.clipsToBounds = true
         return lbl
     }()
@@ -34,7 +30,7 @@ final class SnackView: UIView {
     
     var text: String? {
         didSet {
-           label.text = text
+           label.configureAppHeaderLabel(withText: text ?? "")
         }
     }
     

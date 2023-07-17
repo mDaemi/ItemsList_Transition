@@ -231,6 +231,8 @@ extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
         if keyboardIsOpen { return }
         let cardViewModel = viewModel!.products[indexPath.row]
         let detailView = ProductDetailsVC(cardViewModel: cardViewModel)
+        detailView.viewModel = ProductDetailsViewModel(DataUseCaseProvider().provideProductDetailsUseCase())
+        detailView.productID = viewModel!.products[indexPath.row].id
         detailView.modalPresentationStyle = .overCurrentContext
         detailView.transitioningDelegate = transitionManger
         present(detailView, animated: true, completion: nil)

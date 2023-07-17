@@ -12,8 +12,8 @@ class ProductDetailsDataSource {
     private let service = ProductDetailsService()
 
     // MARK: - Public
-    public func getProductDetails() async throws -> ProductDetail? {
-        let result = try await service.getProductDetail()?.toDomain()
+    public func getProductDetails(for id: Int) async throws -> ProductDetail? {
+        let result = try await service.getProductDetail(for: id)?.toDomain()
         return result
     }
 }

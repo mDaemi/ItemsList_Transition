@@ -38,7 +38,7 @@ class AbstractViewController: UIViewController {
 
         if self.snack == nil {
             snack = SnackView()
-            snack!.layer.cornerRadius = constraint.corderRadius
+            snack!.layer.cornerRadius = 8
             self.view.addSubview(snack!)
             applySnackConstraint(to: snack!)
             self.view.layoutIfNeeded()

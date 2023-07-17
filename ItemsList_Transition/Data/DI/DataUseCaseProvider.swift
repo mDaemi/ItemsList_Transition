@@ -8,6 +8,10 @@
 import Foundation
 
 class DataUseCaseProvider: UseCaseProvider {
+    func provideProductDetailsUseCase() -> PProductDetailsUseCase {
+        return ProductDetailsUseCase(repository: ProductDetailsRepository.shared)
+    }
+    
     func provideProductsListUseCase() -> PProductsListUseCase {
         return ProductsListUseCase(repository: ProductListRepository.shared)
     }

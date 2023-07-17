@@ -7,6 +7,9 @@
 
 import UIKit
 
+/*
+  File purpose: Color and font styles reference
+ */
 enum BackgroundType: String {
     case light
     case dark
@@ -64,11 +67,11 @@ extension UILabel {
     }
 
     func configureAppHeaderLabel(withText text: String){
-        configure(withText: text, size: .appHeaderTextSize, alignment: .left, lines: 2, weight: .medium)
+        configure(withText: text, size: .appHeaderTextSize, alignment: .left, lines: 0, weight: .medium)
     }
 
     func configureAppSubHeaderLabel(withText text: String) {
-        configure(withText: text, size: .smallTextSize, alignment: .left, lines: 2, weight: .regular)
+        configure(withText: text, size: .smallTextSize, alignment: .left, lines: 0, weight: .regular)
     }
 
     private func configure(withText newText: String,
@@ -81,26 +84,6 @@ extension UILabel {
         textAlignment = alignment
         numberOfLines = lines
         lineBreakMode = .byTruncatingTail
-    }
-}
-
-extension UIImageView {
-    func configureAppIconView(forImage appImage: UIImage, size: CGFloat) {
-        image = appImage
-        contentMode = .scaleAspectFit
-        layer.cornerRadius = size/5.0
-        layer.borderColor = UIColor.borderColor.cgColor
-        layer.borderWidth = 0.5
-        clipsToBounds = true
-    }
-}
-
-extension UIStackView {
-    func configure(withAxis axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment, spacing: CGFloat, distribution: UIStackView.Distribution = .fillEqually) {
-        self.axis = axis
-        self.alignment = alignment
-        self.spacing = spacing
-        self.distribution = distribution
     }
 }
 

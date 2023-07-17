@@ -1,5 +1,5 @@
 //
-//  ProductDetailsVC.swift
+//  ProductDetailsVC2.swift
 //  ItemsList_Transition
 //
 //  Created by MDA on 16/07/2023.
@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class ProductDetailsVC: AbstractViewController, UIScrollViewDelegate {
+class ProductDetailsVC2: AbstractViewController, UIScrollViewDelegate {
     
     // MARK: - Properties -
     private var cardViewModel: ProductUIModel
@@ -48,6 +48,12 @@ class ProductDetailsVC: AbstractViewController, UIScrollViewDelegate {
         return button
     }()
     
+    lazy var categoryLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +61,12 @@ class ProductDetailsVC: AbstractViewController, UIScrollViewDelegate {
     }()
     
     lazy var qualityLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -70,8 +82,10 @@ class ProductDetailsVC: AbstractViewController, UIScrollViewDelegate {
         didSet {
             closeButton.isHidden = viewsAreHidden
             cardView?.isHidden = viewsAreHidden
-            priceLabel.isHidden = viewsAreHidden
-            qualityLabel.isHidden = viewsAreHidden
+//            categoryLabel.isHidden = viewsAreHidden
+//            priceLabel.isHidden = viewsAreHidden
+//            qualityLabel.isHidden = viewsAreHidden
+//            descriptionLabel.isHidden = viewsAreHidden
             commentLabel.isHidden = viewsAreHidden
 
             view.backgroundColor = viewsAreHidden ? .clear : .white
@@ -113,11 +127,12 @@ class ProductDetailsVC: AbstractViewController, UIScrollViewDelegate {
 }
 
 // MARK: - View configuration -
-extension ProductDetailsVC {
+extension ProductDetailsVC2 {
     
     private func configureView() {
         configureScrollView()
         configureCardView()
+        addLablesViews()
     }
     
     private func configureScrollView() {
@@ -163,21 +178,70 @@ extension ProductDetailsVC {
     
     private func addLablesViews() {
 
-        // priceLabel
-        scrollView.addSubview(priceLabel)
-        NSLayoutConstraint.activate([
-            priceLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            priceLabel.widthAnchor.constraint(equalToConstant: view.frame.size.width - 50),
-            priceLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: -25.0)
-        ])
-        
-        // qualityLabel
-        scrollView.addSubview(qualityLabel)
-        qualityLabel.anchor(top: priceLabel.bottomAnchor, left: priceLabel.leftAnchor, bottom: nil, right: priceLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
+        // categoryLabel
+//        scrollView.addSubview(categoryLabel)
+//        NSLayoutConstraint.activate([
+//            categoryLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+//            categoryLabel.widthAnchor.constraint(equalToConstant: view.frame.size.width - 40),
+//            categoryLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: -20.0)
+//        ])
+//
+//        // priceLabel
+//        scrollView.addSubview(priceLabel)
+//        priceLabel.anchor(top: categoryLabel.bottomAnchor, left: categoryLabel.leftAnchor, bottom: nil, right: categoryLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
+//
+//        // qualityLabel
+//        scrollView.addSubview(qualityLabel)
+//        qualityLabel.anchor(top: priceLabel.bottomAnchor, left: categoryLabel.leftAnchor, bottom: nil, right: categoryLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
+//
+//        // descriptionLabel
+//        scrollView.addSubview(descriptionLabel)
+//        descriptionLabel.anchor(top: qualityLabel.bottomAnchor, left: categoryLabel.leftAnchor, bottom: nil, right: categoryLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
         
         // commentLabel
+//        scrollView.addSubview(commentLabel)
+//        NSLayoutConstraint.activate([
+//            commentLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+//            commentLabel.widthAnchor.constraint(equalToConstant: view.frame.size.width - 40),
+//            commentLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: -20.0),
+//            commentLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20.0)
+//        ])
+        
+        let firstString = "Lorem Ipsum is simply "
+        let firstAttributes: [NSAttributedString.Key: Any] = [
+            .font : UIFont.systemFont(ofSize: 20, weight: .medium),
+            .foregroundColor: UIColor.black
+        ]
+        let firstAttributedString = NSMutableAttributedString(string: firstString, attributes: firstAttributes)
+        
+        let secondString = "dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. \n\nLorem Ipsum comes from sections 1.10.32 and 1.10.33 of 'de Finibus Bonorum et Malorum' (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, 'Lorem ipsum dolor sit amet..', comes from a line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from 'de Finibus Bonorum et Malorum' by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham. Where can I get some? There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
+        
+        let secondAttributes: [NSAttributedString.Key: Any] = [
+            .font : UIFont.systemFont(ofSize: 20, weight: .regular),
+            .foregroundColor: UIColor.gray
+        ]
+        
+        let secondAttributedString = NSMutableAttributedString(string: secondString, attributes: secondAttributes)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 1.2
+        
+        let attributedString = NSMutableAttributedString(attributedString: firstAttributedString)
+        attributedString.append(secondAttributedString)
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+        
+        commentLabel.attributedText = attributedString
+        commentLabel.textAlignment = .left
+        commentLabel.numberOfLines = 0
+        
         scrollView.addSubview(commentLabel)
-        commentLabel.anchor(top: qualityLabel.bottomAnchor, left: priceLabel.leftAnchor, bottom: scrollView.bottomAnchor, right: priceLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 20.0, paddingRight: 0)
+        
+        NSLayoutConstraint.activate([
+            commentLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            commentLabel.widthAnchor.constraint(equalToConstant: view.frame.size.width - 40),
+            commentLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: 20.0),
+            commentLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20.0)
+        ])
     }
     
     @objc func close() {
@@ -186,7 +250,7 @@ extension ProductDetailsVC {
 }
 
 // MARK: - Transition helper -
-extension ProductDetailsVC {
+extension ProductDetailsVC2 {
     func createSnapshotOfView() {
         let snapshotImage = view.createSnapshot()
         snapshotView.image = snapshotImage
@@ -200,7 +264,7 @@ extension ProductDetailsVC {
 }
 
 // MARK: - ScrollView -
-extension ProductDetailsVC {
+extension ProductDetailsVC2 {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yPositionForDismissal: CGFloat = 20.0
@@ -253,16 +317,16 @@ extension ProductDetailsVC {
 }
 
 // MARK: Data
-extension ProductDetailsVC {
+extension ProductDetailsVC2 {
     // MARK: - Private
     private func bindViewModel() {
         viewModel?.$product
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
                 guard let self = self else { return }
-                self.addLablesViews()
-                self.configureLabelsView()
-                self.view.layoutIfNeeded()
+//                self.addLablesViews()
+//                self.configureLabelsView()
+//                self.view.layoutIfNeeded()
             }
             .store(in: &observers)
     }
@@ -284,25 +348,10 @@ extension ProductDetailsVC {
     
     private func configureLabelsView() {
         guard let product = viewModel?.product else { return }
-        priceLabel.configureAppHeaderLabel(withText: product.salePrice)
-        qualityLabel.configureAppHeaderLabel(withText: product.quality)
-        
-        let attribute: [NSAttributedString.Key: Any] = [
-            .font : UIFont.systemFont(ofSize: 18, weight: .regular),
-            .foregroundColor: UIColor.gray
-        ]
-        
-        let attributString = NSMutableAttributedString(string: product.sellerComment, attributes: attribute)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 1.2
-        
-        let attributedString = NSMutableAttributedString(attributedString: attributString)
-        attributedString.append(attributString)
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        
-        commentLabel.attributedText = attributedString
-        commentLabel.textAlignment = .justified
-        commentLabel.numberOfLines = 0
+//        categoryLabel.configureHeaderLabel(withText: product.categories.description)
+//        priceLabel.configureAppHeaderLabel(withText: product.salePrice)
+//        qualityLabel.configureAppHeaderLabel(withText: product.quality)
+//        descriptionLabel.configureAppSubHeaderLabel(withText: product.description)
+//        commentLabel.configureSubHeaderLabel(withText: product.sellerComment)
     }
 }
