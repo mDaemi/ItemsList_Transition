@@ -30,7 +30,7 @@ final class SnackView: UIView {
     
     var text: String? {
         didSet {
-           label.configureAppHeaderLabel(withText: text ?? "")
+           label.configureHeaderLabel(withText: text ?? "")
         }
     }
     

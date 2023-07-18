@@ -65,7 +65,6 @@
 		6CD1C1902A657D0F00FBEE2F /* ProductDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C18F2A657D0F00FBEE2F /* ProductDetailsUseCase.swift */; };
 		6CD1C1922A657DA800FBEE2F /* PProductDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C1912A657DA800FBEE2F /* PProductDetailsRepository.swift */; };
 		6CD1C1942A657F0100FBEE2F /* ProductDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C1932A657F0100FBEE2F /* ProductDetailsRepository.swift */; };
-		6CD1C1962A65DB0700FBEE2F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C1952A65DB0700FBEE2F /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,7 +148,6 @@
 		6CD1C18F2A657D0F00FBEE2F /* ProductDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsUseCase.swift; sourceTree = "<group>"; };
 		6CD1C1912A657DA800FBEE2F /* PProductDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PProductDetailsRepository.swift; sourceTree = "<group>"; };
 		6CD1C1932A657F0100FBEE2F /* ProductDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsRepository.swift; sourceTree = "<group>"; };
-		6CD1C1952A65DB0700FBEE2F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,7 +455,6 @@
 			children = (
 				6CC9AA442A6452D000599A6D /* ProductDetailsVC.swift */,
 				6CD1C18D2A65792100FBEE2F /* ProductDetailsViewModel.swift */,
-				6CD1C1952A65DB0700FBEE2F /* File.swift */,
 			);
 			path = ProductDetails;
 			sourceTree = "<group>";
@@ -676,7 +673,6 @@
 				6CC9AA372A6402E000599A6D /* ProductListViewModel.swift in Sources */,
 				6CC9A9932A630ED900599A6D /* SceneDelegate.swift in Sources */,
 				6CC9A9EC2A632BE300599A6D /* UseCaseProvider.swift in Sources */,
-				6CD1C1962A65DB0700FBEE2F /* File.swift in Sources */,
 				6CC9AA3A2A6405D500599A6D /* CardTransitionManager.swift in Sources */,
 				6CC9A9CE2A631B1F00599A6D /* LoadingView.swift in Sources */,
 			);

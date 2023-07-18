@@ -103,11 +103,7 @@ extension CardTransitionManager: UIViewControllerAnimatedTransitioning {
         cardViewCopy.insertSubview(whiteView, aboveSubview: cardViewCopy.shadowView)
         
         // MARK: Close Button
-        if cardView.cardModel.backgroundType == .light {
-            closeButton.setImage(UIImage(named: "darkOnLight"), for: .normal)
-        } else {
-            closeButton.setImage(UIImage(named: "lightOnDark"), for: .normal)
-        }
+        closeButton.setImage(UIImage(named: "darkOnLight"), for: .normal)
         
         cardViewCopy.containerView.addSubview(closeButton)
         NSLayoutConstraint.activate([

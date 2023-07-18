@@ -16,9 +16,8 @@ class ProductUIModel {
     var nbReviews: String
     var imageUrl: String? = nil
     var viewMode: CardViewMode = .card
-    var backgroundType: BackgroundType = .light
     
-    init(id: Int, newBestPrice: String, usedBestPrice: String, headline: String, reviewsAverageNote: Float, nbReviews: String, imageUrl: String? = nil, viewMode: CardViewMode = .card, backgroundType: BackgroundType = .light) {
+    init(id: Int, newBestPrice: String, usedBestPrice: String, headline: String, reviewsAverageNote: Float, nbReviews: String, imageUrl: String? = nil, viewMode: CardViewMode = .card) {
         self.id = id
         self.newBestPrice = newBestPrice
         self.usedBestPrice = usedBestPrice
@@ -27,7 +26,6 @@ class ProductUIModel {
         self.nbReviews = nbReviews
         self.imageUrl = imageUrl
         self.viewMode = viewMode
-        self.backgroundType = backgroundType
     }
 }
 

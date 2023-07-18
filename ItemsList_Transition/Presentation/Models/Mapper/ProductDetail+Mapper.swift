@@ -13,7 +13,7 @@ extension ProductDetail {
                                     salePrice: (self.salePrice != nil) ? self.salePrice!.toLocalCurrency() : "-",
                                     newBestPrice: (self.newBestPrice != nil) ? self.newBestPrice!.toLocalCurrency() : "-",
                                     usedBestPrice: (self.usedBestPrice != nil) ? self.usedBestPrice!.toLocalCurrency() : "-",
-                                    quality: self.quality ?? "-",
+                                    quality: "État: \((self.quality == "New") ? "Neuf" : "Occasion")",
                                     type: self.type ?? "-",
                                     sellerComment: self.sellerComment ?? "",
                                     headline: self.headline ?? "",

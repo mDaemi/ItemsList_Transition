@@ -43,7 +43,6 @@ class CardView: UIView {
     lazy var headlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = cardModel.backgroundType.titleTextColor
         return label
     }()
     
@@ -56,21 +55,20 @@ class CardView: UIView {
     lazy var nbReviewLable: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = cardModel.backgroundType.subtitleTextColor
         return label
     }()
     
     lazy var newPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = cardModel.backgroundType.subtitleTextColor
+        label.textColor = UIColor.lightTextColor
         return label
     }()
     
     lazy var usedPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = cardModel.backgroundType.subtitleTextColor
+        label.textColor = UIColor.lightTextColor
         return label
     }()
     
@@ -257,8 +255,8 @@ class CardView: UIView {
     }
     
     private func configureusedPriceLabel() {
-        newPriceLabel.configureAppHeaderLabel(withText: "Neuf dès \(cardModel.newBestPrice)")
-        usedPriceLabel.configureAppHeaderLabel(withText: "Occasion dès \(cardModel.usedBestPrice)")
+        newPriceLabel.configureSubHeaderLabel(withText: "Neuf dès \(cardModel.newBestPrice)")
+        usedPriceLabel.configureSubHeaderLabel(withText: "Occasion dès \(cardModel.usedBestPrice)")
     }
     
     private func topPadding() -> CGFloat {

@@ -140,7 +140,7 @@ extension ProductDetailsVC {
         let topPadding = UIWindow.topPadding
         
         NSLayoutConstraint.activate([
-            cardView!.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -topPadding),
+            cardView!.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 1),
             cardView!.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             cardView!.heightAnchor.constraint(equalToConstant: CGFloat(constraint.cardHeight)),
             cardView!.widthAnchor.constraint(equalToConstant: view.frame.size.width)
@@ -154,11 +154,7 @@ extension ProductDetailsVC {
             closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20.0)
         ])
         
-        if cardView?.cardModel.backgroundType == .light {
-            closeButton.setImage(UIImage(named: "darkOnLight")!, for: UIControl.State.normal)
-        } else {
-            closeButton.setImage(UIImage(named: "lightOnDark")!, for: UIControl.State.normal)
-        }
+        closeButton.setImage(UIImage(named: "darkOnLight")!, for: UIControl.State.normal)
     }
     
     private func addLablesViews() {
@@ -168,16 +164,16 @@ extension ProductDetailsVC {
         NSLayoutConstraint.activate([
             priceLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             priceLabel.widthAnchor.constraint(equalToConstant: view.frame.size.width - 50),
-            priceLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: -25.0)
+            priceLabel.topAnchor.constraint(equalTo: cardView!.bottomAnchor, constant: -20.0)
         ])
         
         // qualityLabel
         scrollView.addSubview(qualityLabel)
-        qualityLabel.anchor(top: priceLabel.bottomAnchor, left: priceLabel.leftAnchor, bottom: nil, right: priceLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
+        qualityLabel.anchor(top: priceLabel.bottomAnchor, left: priceLabel.leftAnchor, bottom: nil, right: priceLabel.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
         
         // commentLabel
         scrollView.addSubview(commentLabel)
-        commentLabel.anchor(top: qualityLabel.bottomAnchor, left: priceLabel.leftAnchor, bottom: scrollView.bottomAnchor, right: priceLabel.rightAnchor, paddingTop: 12, paddingLeft: 0, paddingBottom: 20.0, paddingRight: 0)
+        commentLabel.anchor(top: qualityLabel.bottomAnchor, left: priceLabel.leftAnchor, bottom: scrollView.bottomAnchor, right: priceLabel.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 20.0, paddingRight: 0)
     }
     
     @objc func close() {
@@ -241,14 +237,8 @@ extension ProductDetailsVC {
     }
     
     func updateCloseButton(yContentOffset: CGFloat) {
-        
-        let topPadding = UIWindow.topPadding
-        
-        if yContentOffset < CGFloat(constraint.cardHeight) - topPadding && cardView?.cardModel.backgroundType == .dark {
-            closeButton.setImage(UIImage(named: "lightOnDark"), for: .normal)
-        } else {
-            closeButton.setImage(UIImage(named: "darkOnLight"), for: .normal)
-        }
+       
+        closeButton.setImage(UIImage(named: "darkOnLight"), for: .normal)
     }
 }
 
@@ -284,24 +274,21 @@ extension ProductDetailsVC {
     
     private func configureLabelsView() {
         guard let product = viewModel?.product else { return }
-        priceLabel.configureAppHeaderLabel(withText: product.salePrice)
-        qualityLabel.configureAppHeaderLabel(withText: product.quality)
-        
+        priceLabel.configureHeroLabel(withText: product.salePrice)
+        priceLabel.textColor = UIColor.red
+        qualityLabel.configureHeaderLabel(withText: product.quality)
+       
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
         let attribute: [NSAttributedString.Key: Any] = [
             .font : UIFont.systemFont(ofSize: 18, weight: .regular),
-            .foregroundColor: UIColor.gray
+            .foregroundColor: UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1),
+            .paragraphStyle: paragraphStyle
         ]
         
         let attributString = NSMutableAttributedString(string: product.sellerComment, attributes: attribute)
         
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 1.2
-        
-        let attributedString = NSMutableAttributedString(attributedString: attributString)
-        attributedString.append(attributString)
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        
-        commentLabel.attributedText = attributedString
+        commentLabel.attributedText = NSMutableAttributedString(attributedString: attributString)
         commentLabel.textAlignment = .justified
         commentLabel.numberOfLines = 0
     }
