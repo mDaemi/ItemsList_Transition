@@ -16,6 +16,7 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
     private let transitionManger = CardTransitionManager()
     private var heightConstraint: NSLayoutConstraint!
     private var keyboardIsOpen: Bool = false
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: Views
     lazy var scrollView: UIScrollView = {
@@ -43,6 +44,7 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
         searchBar.placeholder = "Search"
         searchBar.searchBarStyle = .minimal
         searchBar.showsCancelButton = false
+        searchBar.delegate = self
         return searchBar
     }()
     
@@ -53,6 +55,7 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .onDrag
         tableView.registerCell(GenericTableViewCell<CardView>.self)
         return tableView
     }()
@@ -65,7 +68,10 @@ class ProductsListVC: AbstractViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         configureView()
         bindViewModel()
-        loadData()
+        searchBar.searchTextField.textPublisher
+            .sink(receiveValue: { text in
+                self.loadData(for: text)
+            }).store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -166,23 +172,21 @@ extension ProductsListVC {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
                 guard let self = self, let viewModel = self.viewModel else { return }
-                self.cardsTableView.isHidden = false
                 self.heightConstraint.constant = CGFloat(viewModel.products.count * constraint.cardHeight)
                 self.cardsTableView.reloadData()
                 self.view.layoutIfNeeded()
-                self.view.hideLoader()
             }
             .store(in: &observers)
     }
-
-    private func loadData() {
+    
+    private func loadData(for world: String) {
         guard let viewModel = viewModel else {
             print("ViewModel is NULL.")
             return
         }
         Task {
             do {
-                try await viewModel.fetchProducts(for: "samsung")
+                try await viewModel.fetchProducts(for: world)
             } catch {
                 displaySnack(text: localized("error.service"))
             }
@@ -190,7 +194,7 @@ extension ProductsListVC {
     }
 }
 
-// MARK: Table view
+// MARK: - Table view -
 extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -206,7 +210,7 @@ extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
         guard let cellView = cardCell.cellView else {
             let cardView = CardView(cardModel: cardViewModel)
             cardCell.cellView = cardView
-
+            
             return cardCell
         }
         
@@ -244,10 +248,17 @@ extension ProductsListVC: UITableViewDelegate, UITableViewDataSource {
     func selectedCellCardView() -> CardView? {
         
         guard let indexPath = cardsTableView.indexPathForSelectedRow else { return nil }
-
+        
         let cell = cardsTableView.cellForRow(at: indexPath) as! GenericTableViewCell<CardView>
         guard let cardView = cell.cellView else { return nil }
-
+        
         return cardView
+    }
+}
+
+// MARK: - UISearchBarDelegate -
+extension ProductsListVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

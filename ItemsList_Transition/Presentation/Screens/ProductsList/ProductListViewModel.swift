@@ -20,6 +20,7 @@ class ProductListViewModel {
     
     // MARK: - Internal
     public func fetchProducts(for keyword: String) async throws {
+        products = []
         let result = try await useCase.loadProducts(for: keyword).map {$0.map {$0.toPresentation()}} ?? []
         products = result
     }

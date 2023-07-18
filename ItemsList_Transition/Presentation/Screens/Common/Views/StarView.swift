@@ -40,6 +40,9 @@ class StarView: UIView {
     }
     
     private func setupStarRatingView() {
+        for subview in starRatingStackView.subviews {
+            subview.removeFromSuperview()
+        }
         let filledStars = Int(starRating)
         let hasHalfStar = starRating.truncatingRemainder(dividingBy: 1) != 0
         let emptyStars = hasHalfStar ? 5 - filledStars - 1 : 5 - filledStars

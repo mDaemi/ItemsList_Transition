@@ -281,7 +281,7 @@ extension ProductDetailsVC {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         let attribute: [NSAttributedString.Key: Any] = [
-            .font : UIFont.systemFont(ofSize: 18, weight: .regular),
+            .font : UIFont.systemFont(ofSize: 17, weight: .regular),
             .foregroundColor: UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1),
             .paragraphStyle: paragraphStyle
         ]

@@ -31,6 +31,7 @@ final class SnackView: UIView {
     var text: String? {
         didSet {
            label.configureHeaderLabel(withText: text ?? "")
+           label.textColor = .white
         }
     }
     
