@@ -240,7 +240,7 @@ class CardView: UIView {
     
     private func configureusedStarView() {
         starView.configure(starRating: cardModel.reviewsAverageNote)
-        nbReviewLable.configureAppSubHeaderLabel(withText: "\(cardModel.nbReviews) Avis")
+        nbReviewLable.configureAppSubHeaderLabel(withText: "\(cardModel.nbReviews)\(localized("card.opinion"))")
     }
     
     // MARK: - prices Label -
@@ -255,8 +255,8 @@ class CardView: UIView {
     }
     
     private func configureusedPriceLabel() {
-        newPriceLabel.configureSubHeaderLabel(withText: "Neuf dès \(cardModel.newBestPrice)")
-        usedPriceLabel.configureSubHeaderLabel(withText: "Occasion dès \(cardModel.usedBestPrice)")
+        newPriceLabel.configureSubHeaderLabel(withText: "\(localized("card.new")) \(cardModel.newBestPrice)")
+        usedPriceLabel.configureSubHeaderLabel(withText: "\(localized("card.used")) \(cardModel.usedBestPrice)")
     }
     
     private func topPadding() -> CGFloat {

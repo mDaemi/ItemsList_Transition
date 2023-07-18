@@ -9,11 +9,11 @@ import Foundation
 
 class ProductDetailsRepository: PProductDetailsRepository {
    
-    // MARK: - Properties
+    // MARK: - Properties -
     static let shared = ProductDetailsRepository()
     private let dataSource: ProductDetailsDataSource = ProductDetailsDataSource()
     
-    // MARK: - public
+    // MARK: - public -
     func getDetails(for id: Int) async throws -> ProductDetail? {
         return try await dataSource.getProductDetails(for: id)
     }

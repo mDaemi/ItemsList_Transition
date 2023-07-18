@@ -8,10 +8,10 @@
 import Foundation
 
 class ProductDetailsDataSource {
-    // MARK: - Properties
+    // MARK: - Properties -
     private let service = ProductDetailsService()
 
-    // MARK: - Public
+    // MARK: - Public -
     public func getProductDetails(for id: Int) async throws -> ProductDetail? {
         let result = try await service.getProductDetail(for: id)?.toDomain()
         return result

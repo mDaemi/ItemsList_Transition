@@ -65,10 +65,8 @@ class StarView: UIView {
             starRatingStackView.addArrangedSubview(imageView)
         }
         
-        // Add the stack view to the view
         addSubview(starRatingStackView)
         
-        // Set constraints for the stack view
         NSLayoutConstraint.activate([
             starRatingStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             starRatingStackView.centerYAnchor.constraint(equalTo: centerYAnchor),

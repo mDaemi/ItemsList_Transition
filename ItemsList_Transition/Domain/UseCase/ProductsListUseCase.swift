@@ -12,15 +12,15 @@ protocol PProductsListUseCase {
 }
 
 class ProductsListUseCase: PProductsListUseCase {
-    // MARK: - properties
+    // MARK: - properties -
     let repository: PProductListRepository
     
-    // MARK: - init
+    // MARK: - init -
     init(repository: PProductListRepository) {
         self.repository = repository
     }
     
-    // MARK: - Internals
+    // MARK: - Internals -
     func loadProducts(for keyword: String) async throws -> [Product]? {
         return try await self.repository.getProducts(for: keyword)
     }

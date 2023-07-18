@@ -70,6 +70,7 @@ class CardTransitionManager: NSObject {
     
 }
 
+// MARK: - UIViewControllerAnimatedTransitioning -
 extension CardTransitionManager: UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -198,6 +199,7 @@ extension CardTransitionManager: UIViewControllerAnimatedTransitioning {
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate -
 extension CardTransitionManager: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

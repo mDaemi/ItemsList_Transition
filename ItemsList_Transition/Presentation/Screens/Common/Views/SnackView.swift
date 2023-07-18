@@ -35,7 +35,7 @@ final class SnackView: UIView {
         }
     }
     
-    // MARK: - Inherit
+    // MARK: - Inherit -
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layer.zPosition = 1
@@ -56,7 +56,7 @@ final class SnackView: UIView {
         updateRounded()
     }
     
-    // MARK: - Actions
+    // MARK: - Actions -
     fileprivate func updateRounded() {
         let radius = 5
         let maskLayer = CAShapeLayer()

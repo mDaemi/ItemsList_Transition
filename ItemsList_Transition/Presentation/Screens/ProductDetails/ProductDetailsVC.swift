@@ -137,8 +137,6 @@ extension ProductDetailsVC {
         cardView?.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(cardView!)
         
-        let topPadding = UIWindow.topPadding
-        
         NSLayoutConstraint.activate([
             cardView!.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 1),
             cardView!.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),

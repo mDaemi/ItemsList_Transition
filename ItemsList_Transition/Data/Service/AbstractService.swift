@@ -8,14 +8,14 @@
 import Foundation
 
 class AbstractService {
-    // MARK: - Properties
+    // MARK: - Properties -
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return decoder
     }()
 
-    // MARK: - Internal
+    // MARK: - Internal -
     func getDecoder() -> JSONDecoder {
         return decoder
     }

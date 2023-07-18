@@ -11,10 +11,10 @@ import Foundation
 
 final class ProductDetailsService: AbstractService {
     
-    // MARK: - Properties
+    // MARK: - Properties -
     static let shared = ProductDetailsService()
 
-    // MARK: - public
+    // MARK: - public -
     public func getProductDetail(for id: Int) async throws -> ProductDetailsResponse? {
         let urlString = Constants.getUrlString(of: Constants.requests.productDetails) + String(id)
         guard let url = URL(string: urlString) else {

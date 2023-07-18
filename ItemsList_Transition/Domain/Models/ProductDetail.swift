@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductDetail {
+public struct ProductDetail {
     var productId: Int
     var salePrice: Float?
     var newBestPrice: Float?
@@ -22,12 +22,12 @@ struct ProductDetail {
     var images: [ImageURL]
 }
 
-struct ImageURL {
+public struct ImageURL {
     var size: String
     var url: String
 }
 
-struct GlobalRating {
+public struct GlobalRating {
     var score: Float?
     var nbReviews: Int?
 }

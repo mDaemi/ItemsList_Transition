@@ -8,10 +8,10 @@
 import Foundation
 
 class ProductListDataSource {
-    // MARK: - Properties
+    // MARK: - Properties -
     private let service = ProductListService()
 
-    // MARK: - Public
+    // MARK: - Public -
     public func getProducts(for keyword: String) async throws -> [Product]? {
         guard let response = try await service.getProducts(for: keyword)?.products else {
             return []

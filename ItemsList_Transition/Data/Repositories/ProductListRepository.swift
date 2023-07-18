@@ -8,11 +8,11 @@
 import Foundation
 
 class ProductListRepository: PProductListRepository {
-    // MARK: - Properties
+    // MARK: - Properties -
     static let shared = ProductListRepository()
     private let dataSource: ProductListDataSource = ProductListDataSource()
     
-    // MARK: - public
+    // MARK: - public -
     func getProducts(for keyword: String) async throws -> [Product]? {
         return try await dataSource.getProducts(for: keyword)
     }

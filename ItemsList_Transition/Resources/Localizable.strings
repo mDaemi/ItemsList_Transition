@@ -11,12 +11,9 @@
  ******************************************************************************/
 
 "error.service" = "Il y a un problème. Veuillez réessayer plus tard.";
-
-/*******************************************************************************
- // MARK: -                          Products List
- ******************************************************************************/
-
-"list.service" = "Il y a un problème. Veuillez réessayer plus tard.";
+"card.opinion" = "Avis";
+"card.used" = "Occasion dès";
+"card.new" = "Neuf dès";
 
 /*******************************************************************************
  // MARK: -                          Product Details

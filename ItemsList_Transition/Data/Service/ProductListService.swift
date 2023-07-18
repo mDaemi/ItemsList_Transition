@@ -9,10 +9,10 @@ import Foundation
 
 final class ProductListService: AbstractService {
     
-    // MARK: - Properties
+    // MARK: - Properties -
     static let shared = ProductListService()
 
-    // MARK: - public
+    // MARK: - public -
     public func getProducts(for keyword: String) async throws -> ProductsResponse? {
         let urlString = Constants.getUrlString(of: Constants.requests.products) + keyword
         guard let url = URL(string: urlString) else {
