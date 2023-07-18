@@ -284,7 +284,7 @@ extension ProductDetailsVC {
             .paragraphStyle: paragraphStyle
         ]
         
-        let attributString = NSMutableAttributedString(string: product.sellerComment, attributes: attribute)
+        let attributString = NSMutableAttributedString(string: product.sellerComment + product.sellerComment+product.sellerComment, attributes: attribute)
         
         commentLabel.attributedText = NSMutableAttributedString(attributedString: attributString)
         commentLabel.textAlignment = .justified
