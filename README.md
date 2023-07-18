@@ -21,5 +21,4 @@ Minimum deployment target: iOS 15.0
 
 # IMPLEMENTATION
 
-/Users/mda/Downloads/Screen Recording 2023-07-18 at 18.02.44.gif
-
+![Screen Recording 2023-07-18 at 18 02 44](https://github.com/mDaemi/ItemsList_Transition/assets/31176385/ba730ab8-a645-46da-86aa-3647b625fe82)
